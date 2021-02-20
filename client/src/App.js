@@ -15,8 +15,8 @@ function App() {
         <Container>
           <Row>
             <Col size="md-12">
-              <h2 className='text-center'>(React) Google Books Search</h2>
-              <h4 className='text-center'>Search for and Save Books of Interest</h4>
+              <h2 className='text-center fw-bolder'>(React) Google Books Search</h2>
+              <h4 className='text-center text-muted'>Search for and Save Books of Interest</h4>
             </Col>
           </Row>
           <Row>
