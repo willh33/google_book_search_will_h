@@ -27,9 +27,12 @@ const SearchBooks = (  ) => {
 	//Other Methods
 	const searchBooks = async () => {
 		let searchValue = searchField.current.value;
+
 		if(!searchValue)
 			return;
 		let res = await API.searchGoogleBooks(searchValue);
+
+		console.log("search resulst", res);
 		setSearchResults(res.data.items);
 	};
 
@@ -58,7 +61,14 @@ const SearchBooks = (  ) => {
 								<h2>Results</h2>
 								{
 									searchResults.map( (res, index) => (
-										<Book key={index} book={res} save={true}></Book>
+										<Book key={index} book={{
+											title: res.volumeInfo.title,
+											subtitle: res.volumeInfo.subtitle,
+											authors: res.volumeInfo.authors || [],
+											image: res.volumeInfo.imageLinks.thumbnail,
+											description: res.volumeInfo.description,
+											link: res.volumeInfo.infoLink
+										}} save={true}></Book>
 									))
 								}
 							</>

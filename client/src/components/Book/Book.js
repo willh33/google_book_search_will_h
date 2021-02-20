@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import Button from '@material-ui/core/Button';
 import { Container, Row, Col } from '../Grid';
 import { FormBtn } from '../Form';
+import API from '../../utils/API';
 
 /**
  * A component that displays a book
@@ -10,7 +11,7 @@ import { FormBtn } from '../Form';
  * @param book
  * @constructor
  */
-const Book = ( {save, ...props} ) => {
+const Book = ( {save, book: _book} ) => {
 	//state variables
 	const [book, setBook] = useState({
 		title: '', 
@@ -26,10 +27,9 @@ const Book = ( {save, ...props} ) => {
      * ComponentDidMount: What should happen when this component is first loaded into the DOM
      */
     useEffect( () => {
-		let {volumeInfo} = props.book; 
-		setBook(volumeInfo)
-		console.log('props', volumeInfo);
-	}, [props]);
+		setBook(_book)
+		console.log('props', _book);
+	}, [_book]);
 	
 	useEffect( () => {
 		if(save)
@@ -45,7 +45,7 @@ const Book = ( {save, ...props} ) => {
 	 */
 	const viewBook = () => {
 		//Go to the view book page
-		window.location.href = book.infoLink;
+		window.location.href = book.link;
 	}
 	
 	/**
@@ -53,6 +53,8 @@ const Book = ( {save, ...props} ) => {
 	 */
 	const deleteBook = () => {
 		//Call the API to delete the book
+		API.deleteBook(book._id);
+		window.location.reload();
 	}
 	
 	/**
@@ -60,6 +62,7 @@ const Book = ( {save, ...props} ) => {
 	 */
 	const saveBook = () => {
 		//Call the API to save the book
+		API.saveBook(book);
 	}
 
     return (
@@ -102,7 +105,7 @@ const Book = ( {save, ...props} ) => {
 			</Row>
 			<Row>
 				<Col size="md-3">
-					<img src={book.imageLinks.thumbnail}></img>
+					<img src={book.image}></img>
 				</Col>
 				<Col size="md-9">
 					<p>{book.description}</p>
